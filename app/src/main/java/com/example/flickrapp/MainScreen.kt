@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.flickrapp.CenteredProgressBar
 import com.example.flickrapp.FlickrViewModel
 import com.example.flickrapp.PhotoList
 
@@ -41,9 +42,11 @@ fun MainScreen(navController: NavController, viewModel: FlickrViewModel = viewMo
                 style = TextStyle(fontSize = 24.sp),
                 modifier = Modifier.padding(vertical = 16.dp)
             )
-
+            if (photos.isEmpty()) {
+                CenteredProgressBar()
+            } else {
                 PhotoList(photos, navController)
-
+            }
         }
     }
 }
