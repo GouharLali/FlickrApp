@@ -2,6 +2,7 @@ package com.example.flickrapp
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,10 +20,12 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberImagePainter
 
 @Composable
-fun PhotoList(photos: List<FlickrPhotoModel>) {
+fun PhotoList(photos: List<FlickrPhotoModel>, navController: NavController) {
     LazyColumn {
         items(photos) { photo ->
             Box(
@@ -34,6 +37,9 @@ fun PhotoList(photos: List<FlickrPhotoModel>) {
                     style = TextStyle(fontSize = 20.sp),
                     modifier = Modifier
                         .padding(4.dp)
+                        .clickable {
+                            navController.navigate("detail/${photo.owner}")
+                        }
                 )
             }
 
@@ -50,6 +56,9 @@ fun PhotoList(photos: List<FlickrPhotoModel>) {
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .weight(1f)
+                                .clickable {
+                                    navController.navigate("detail/${photo.owner}")
+                                },
                         )
                     } else {
                         Box(
@@ -118,8 +127,10 @@ fun PhotoListPreview() {
         )
     )
 
+    val NavController = rememberNavController()
+
     Surface(color = Color.White) {
-        PhotoList(photos = samplePhotos)
+        PhotoList(photos = samplePhotos, navController = NavController)
     }
 }
 
