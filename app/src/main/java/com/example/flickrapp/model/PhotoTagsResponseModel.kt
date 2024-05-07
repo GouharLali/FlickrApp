@@ -1,4 +1,4 @@
-package com.example.newlist.model
+package com.example.flickrapp.model
 
 import com.google.gson.annotations.SerializedName
 

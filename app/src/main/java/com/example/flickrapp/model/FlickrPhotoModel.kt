@@ -1,4 +1,4 @@
-package com.example.flickrapp
+package com.example.flickrapp.model
 
 data class FlickrPhotoModel(
     val id: String,
@@ -16,5 +16,5 @@ data class FlickrPhotoModel(
     val url_h: String?,
     val height_h: Int,
     val width_h: Int,
-    val tags: List<String>? // Assuming tags are fetched separately
+    val tags: List<String>?
 )

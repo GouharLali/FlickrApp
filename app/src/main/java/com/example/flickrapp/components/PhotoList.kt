@@ -1,4 +1,4 @@
-package com.example.flickrapp
+package com.example.flickrapp.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -23,9 +23,11 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberImagePainter
+import com.example.flickrapp.model.FlickrPhotoModel
 
 @Composable
 fun PhotoList(photos: List<FlickrPhotoModel>, navController: NavController) {
+
     LazyColumn {
         items(photos) { photo ->
             Box(
