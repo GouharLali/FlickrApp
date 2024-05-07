@@ -18,7 +18,14 @@ class FlickrViewModel : ViewModel() {
     private val _loading = MutableStateFlow(false)
     val loading: StateFlow<Boolean> = _loading
 
-    fun fetchPhotos(apiKey: String?, searchText: String, tags: List<String>, matchType: MatchType, maxPhotos: Int, safeSearch: Boolean) {
+    fun fetchPhotos(
+        apiKey: String?,
+        searchText: String,
+        tags: List<String>,
+        matchType: MatchType,
+        maxPhotos: Int,
+        safeSearch: Boolean
+    ) {
         viewModelScope.launch {
             try {
                 _loading.value = true // Start loading
@@ -32,7 +39,28 @@ class FlickrViewModel : ViewModel() {
         }
     }
 
+    fun fetchPhotosByUsername(
+        apiKey: String?,
+        username: String,
+        tags: List<String>,
+        maxPhotos: Int,
+        safeSearch: Boolean
+    ) {
+        viewModelScope.launch {
+            try {
+                _loading.value = true
+                val fetchedPhotos = repository.fetchPhotosByUsername(apiKey, username, maxPhotos, safeSearch)
+                _photos.value = fetchedPhotos
+            } catch (e: Exception) {
+
+            } finally {
+                _loading.value = false
+            }
+        }
+    }
+
     fun clearPhotos() {
         _photos.value = emptyList()
     }
 }
+
