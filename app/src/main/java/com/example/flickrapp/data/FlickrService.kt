@@ -29,4 +29,16 @@ interface FlickrService {
         @Query("format") format: String = "json",
         @Query("nojsoncallback") noJsonCallback: Int = 1
     ): Response<PhotoTagsResponseModel>
+
+    @GET("services/rest")
+    suspend fun searchPhotosByUsername(
+        @Query("method") method: String = "flickr.photos.search",
+        @Query("api_key") apiKey: String,
+        @Query("format") format: String = "json",
+        @Query("nojsoncallback") noJsonCallback: Int = 1,
+        @Query("extras") extras: String = "date_taken,url_h",
+        @Query("username") username: String,
+        @Query("per_page") perPage: Int
+    ): Response<FlickrResponseModel>
+
 }
