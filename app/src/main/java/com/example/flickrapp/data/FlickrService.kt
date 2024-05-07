@@ -1,9 +1,10 @@
-package com.example.flickrapp
+package com.example.flickrapp.data
 
-import com.example.newlist.model.PhotoTagsResponseModel
+import com.example.flickrapp.model.FlickrResponseModel
+import com.example.flickrapp.model.PhotoTagsResponseModel
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
-import retrofit2.Response
 
 interface FlickrService {
     @GET("services/rest")
@@ -14,7 +15,10 @@ interface FlickrService {
         @Query("nojsoncallback") noJsonCallback: Int = 1,
         @Query("extras") extras: String = "date_taken,url_h",
         @Query("text") text: String, // Search text query
-        @Query("safe_search") safeSearch: Int = 1 // Set safe_search parameter to 1 (safe)
+        @Query("safe_search") safeSearch: Int = 1, // Set safe_search parameter to 1 (safe)
+        @Query("tags") tags: String, // Tags to be matched
+        @Query("tag_mode") tagMode: String = "any", // Match type: "any" for some, "all" for all
+        @Query("per_page") perPage: Int // Number of photos per page
     ): Response<FlickrResponseModel>
 
     @GET("services/rest")

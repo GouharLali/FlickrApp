@@ -1,4 +1,4 @@
-package com.example.flickrapp
+package com.example.flickrapp.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavType
@@ -6,8 +6,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.newlist.ui.screens.MainScreen
-import com.example.newlist.ui.screens.UserPhotosScreen
+import com.example.flickrapp.ui.screens.MainScreen
+import com.example.flickrapp.ui.screens.UserPhotosScreen
 
 @Composable
 fun Nav() {

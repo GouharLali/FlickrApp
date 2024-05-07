@@ -1,5 +1,7 @@
-package com.example.newlist.ui.screens
+package com.example.flickrapp.ui.screens
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -18,15 +20,16 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
-import com.example.flickrapp.FlickrPhotoModel
+import com.example.flickrapp.model.FlickrPhotoModel
 
 
 @Composable
 fun DetailScreen(
     photos: List<FlickrPhotoModel>,
     ownerId: String,
-    onImageClick: () -> Unit // Change the signature of onImageClick
+    onImageClick: () -> Unit
 ) {
+    Log.d(TAG, "DetailScreen: photos=$photos, ownerId=$ownerId")
     if (photos.isEmpty()) {
         Text(text = "No photos found for this user")
     } else {
@@ -45,7 +48,7 @@ fun DetailScreen(
                                 .fillMaxWidth()
                                 .height(200.dp)
                                 .clickable {
-                                    onImageClick() // Call onImageClick without passing ownerId
+                                    onImageClick()
                                 },
                             contentScale = ContentScale.Crop
                         )
@@ -54,11 +57,11 @@ fun DetailScreen(
                             modifier = Modifier.padding(8.dp)
                         ) {
                             Text(
-                                text = "Title: ${photo.title ?: "N/A"}",
+                                text = "Title: ${photo.title}",
                                 modifier = Modifier.padding(bottom = 4.dp)
                             )
                             Text(
-                                text = "Date Taken: ${photo.datetaken ?: "N/A"}",
+                                text = "Date Taken: ${photo.datetaken}",
                                 modifier = Modifier.padding(bottom = 4.dp)
                             )
                             Text(
@@ -97,7 +100,7 @@ fun DetailScreenPreview() {
         url_h = "https://live.staticflickr.com/65535/53695882964_5f7fbaf9bc_h.jpg",
         height_h = 1000,
         width_h = 1500,
-        tags = emptyList() // Providing an empty list for tags
+        tags = emptyList()
     )
 
     Surface(color = Color.White) {

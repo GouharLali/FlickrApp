@@ -1,4 +1,4 @@
-package com.example.flickrapp
+package com.example.flickrapp.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

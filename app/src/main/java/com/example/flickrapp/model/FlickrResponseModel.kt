@@ -1,4 +1,4 @@
-package com.example.flickrapp
+package com.example.flickrapp.model
 
 data class FlickrResponseModel(
     val photos: PhotosData,
