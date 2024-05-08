@@ -46,6 +46,7 @@ fun UserPhotosScreen(navController: NavController, ownerId: String, viewModel: F
                 CenteredProgressBar()
             } else {
                 DetailScreen(
+                    navController = navController,
                     photos = photos,
                     ownerId = ownerId,
                     onImageClick = {

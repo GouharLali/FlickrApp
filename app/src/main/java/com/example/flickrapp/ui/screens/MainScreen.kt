@@ -1,6 +1,5 @@
 package com.example.flickrapp.ui.screens
 
-import android.app.Application
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -19,22 +19,22 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.flickrapp.MyApp
-import com.example.flickrapp.ViewModelFactory
+import androidx.navigation.compose.rememberNavController
 import com.example.flickrapp.components.CenteredProgressBar
 import com.example.flickrapp.components.PhotoList
-import com.example.flickrapp.data.FlickrRepository
 import com.example.flickrapp.enumModel.MatchType
 import com.example.flickrapp.viewModel.FlickrViewModel
 
 @Composable
 fun MainScreen(navController: NavController) {
-    val application = LocalContext.current.applicationContext as Application
-    val viewModel: FlickrViewModel = viewModel(factory = ViewModelFactory(application, FlickrRepository(MyApp.database)))
+    val viewModel: FlickrViewModel = viewModel()
 
     val photos by viewModel.photos.collectAsState()
     val loading by viewModel.loading.collectAsState()
@@ -64,28 +64,44 @@ fun MainScreen(navController: NavController) {
         ) {
             Text(
                 text = "Flickr",
-                modifier = Modifier.padding(vertical = 16.dp)
+                modifier = Modifier.padding(vertical = 16.dp),
+                fontWeight = FontWeight.Bold, // Make the text bold
+                fontSize = 30.sp
             )
+// Text field for entering username
+            if (tagsState.value.isEmpty()) {
+                OutlinedTextField(
+                    value = usernameState.value,
+                    onValueChange = {
+                        usernameState.value = it
+                        if (it.isNotEmpty() && tagsState.value.isNotEmpty()) {
+                            tagsState.value = ""
+                        }
+                    },
+                    label = { Text("Username") },
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .fillMaxWidth()
+                )
+            }
 
-            // Text field for entering username
-            OutlinedTextField(
-                value = usernameState.value,
-                onValueChange = { usernameState.value = it },
-                label = { Text("Username") },
-                modifier = Modifier
-                    .padding(8.dp)
-                    .fillMaxWidth()
-            )
+// Text field for entering tags
+            if (usernameState.value.isEmpty()) {
+                OutlinedTextField(
+                    value = tagsState.value,
+                    onValueChange = {
+                        tagsState.value = it
+                        if (it.isNotEmpty()) {
+                            usernameState.value = ""
+                        }
+                    },
+                    label = { Text("Tags") },
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .fillMaxWidth()
+                )
+            }
 
-            // Text field for entering tags
-            OutlinedTextField(
-                value = tagsState.value,
-                onValueChange = { tagsState.value = it },
-                label = { Text("Tags") },
-                modifier = Modifier
-                    .padding(8.dp)
-                    .fillMaxWidth()
-            )
 
             Row(modifier = Modifier.padding(8.dp)) {
                 Text("Match Type: ")
