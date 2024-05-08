@@ -1,8 +1,6 @@
 package com.example.flickrapp.viewModel
 
 import android.app.Application
-import android.content.ContentValues.TAG
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.flickrapp.MyApp
