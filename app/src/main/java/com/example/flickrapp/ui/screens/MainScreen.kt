@@ -1,5 +1,6 @@
 package com.example.flickrapp.ui.screens
 
+import android.app.Application
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,16 +19,23 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.flickrapp.MyApp
+import com.example.flickrapp.ViewModelFactory
 import com.example.flickrapp.components.CenteredProgressBar
 import com.example.flickrapp.components.PhotoList
+import com.example.flickrapp.data.FlickrRepository
 import com.example.flickrapp.enumModel.MatchType
 import com.example.flickrapp.viewModel.FlickrViewModel
 
 @Composable
-fun MainScreen(navController: NavController, viewModel: FlickrViewModel = viewModel()) {
+fun MainScreen(navController: NavController) {
+    val application = LocalContext.current.applicationContext as Application
+    val viewModel: FlickrViewModel = viewModel(factory = ViewModelFactory(application, FlickrRepository(MyApp.database)))
+
     val photos by viewModel.photos.collectAsState()
     val loading by viewModel.loading.collectAsState()
     val usernameState = remember { mutableStateOf("") }
