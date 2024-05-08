@@ -1,7 +1,13 @@
 package com.example.flickrapp.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+
+@Entity(tableName = "photos")
+@TypeConverters(Converters::class)
 data class FlickrPhotoModel(
-    val id: String,
+    @PrimaryKey val id: String,
     val owner: String,
     val secret: String,
     val server: String,
@@ -18,3 +24,4 @@ data class FlickrPhotoModel(
     val width_h: Int,
     val tags: List<String>?
 )
+

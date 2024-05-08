@@ -1,12 +1,14 @@
 package com.example.flickrapp.data
 
 import android.util.Log
+import com.example.flickrapp.Room.PhotoDatabase
 import com.example.flickrapp.enumModel.MatchType
 import com.example.flickrapp.model.FlickrPhotoModel
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class FlickrRepository {
+class FlickrRepository(private val database: PhotoDatabase) {
+
     private val TAG = "FlickrRepository"
 
     private val retrofit = Retrofit.Builder()
@@ -78,7 +80,13 @@ class FlickrRepository {
         return emptyList()
     }
 
-    suspend fun fetchPhotosByUsername(apiKey: String?, username: String, maxPhotos: Int, safeSearch: Boolean): List<FlickrPhotoModel> {
+    suspend fun fetchPhotosByUsername(
+        apiKey: String?,
+        username: String,
+        tags: List<String>,
+        maxPhotos: Int,
+        safeSearch: Boolean
+    ): List<FlickrPhotoModel> {
         val response = flickrService.searchPhotosByUsername(
             apiKey = apiKey ?: "",
             username = username,
@@ -127,5 +135,9 @@ class FlickrRepository {
             Log.e(TAG, "fetchPhotosByUsername: Error response received: $response")
         }
         return emptyList()
+    }
+
+    suspend fun savePhoto(photo: FlickrPhotoModel) {
+        database.photoDao().insertPhoto(photo)
     }
 }
